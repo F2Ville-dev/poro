@@ -1,0 +1,68 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.db"
+}
+
+enum NotificationType {
+    TWITCH
+    YOUTUBE
+    TIKTOK
+}
+
+enum LogType {
+    MESSAGE_DELETED
+    MESSAGE_UPDATED
+    USER_BANNED
+    USER_UNBANNED
+    USER_KICKED
+    ROLE_CREATED
+    ROLE_DELETED
+    ROLE_UPDATED
+    CHANNEL_CREATED
+    CHANNEL_DELETED
+    CHANNEL_UPDATED
+}
+
+model Notification {
+    id        Int              @id @default(autoincrement())
+    type      NotificationType
+    channelId String
+    creator   String
+    createdAt DateTime         @default(now())
+    updatedAt DateTime         @updatedAt
+}
+
+model Config {
+    id        Int      @id @default(autoincrement())
+    guildId   String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    joinChannelId   String?
+    leaveChannelId  String?
+    notifyChannelId String?
+    logChannelId    String?
+
+    joinMessage  String? @default("Welcome on {server}, {user}!")
+    leaveMessage String? @default("Goodbye {user}, we will miss you!")
+
+    enableJoinMessages  Boolean @default(true)
+    enableLeaveMessages Boolean @default(false)
+    enableNotifications Boolean @default(false)
+    enableLogs          Boolean @default(false)
+
+    enabledLogTypes String @default("")
+}
+
+model Log {
+    id        Int      @id @default(autoincrement())
+    guildId   String
+    userId    String
+    type      LogType
+    action    String
+    timestamp DateTime @default(now())
+}
