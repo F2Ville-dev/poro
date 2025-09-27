@@ -1,9 +1,15 @@
 # poro
 
 Poro is a Discord Bot that helps manage communities for content creators. 
-It will send messages in a channel when the creator goes live stream on twitch, or uploads a video on youtube or tiktok. 
-It will use Prisma with sqlite for the database.
-It should use slash commands.
+
+## TODO
+- [ ] Send notifications for Twitch, Youtube, TikTok
+- [ ] Moderation commands
+- [ ] Join / Leave messages
+- [ ] Logs
+- [ ] User verification
+
+## Install
 
 To install dependencies:
 
